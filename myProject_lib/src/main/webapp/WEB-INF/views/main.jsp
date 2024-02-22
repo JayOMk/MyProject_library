@@ -21,7 +21,8 @@
       <div class="row">
         <div class="col-12">
           <nav class="navbar navbar-expand-md navbar-light">
-            <a class="navbar-brand" href="https://front.codes/" target="_blank"><img src="/images/Logo_removebg.png" alt=""></a>  
+<!--             <a class="navbar-brand" href="https://front.codes/" target="_blank"><img src="/images/Logo_removebg.png" alt=""></a>   -->
+            <a class="navbar-brand" href="https://front.codes/" target="_blank"><img src="http://image.aladin.co.kr/product/29/95/cover/8932105634_1.gif" alt=""></a>  
             
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>

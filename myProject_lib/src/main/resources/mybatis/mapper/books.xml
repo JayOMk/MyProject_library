@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lib.dao.BookDao">
+
+    <insert id="addBook" parameterType="com.lib.dto.BookDto">
+        INSERT INTO books (SEQ_NO, ISBN_THIRTEEN_NO, VLM_NM, TITLE_NM, AUTHR_NM, PUBLISHER_NM, PBLICTE_DE, ADTION_SMBL_NM, IMAGE_URL, BOOK_INTRCN_CN, KDC_NM, TITLE_SBST_NM, AUTHR_SBST_NM, TWO_PBLICTE_DE, ISBN_NO)
+        VALUES (#{seqNo}, #{isbnThirteenNo}, #{vlmNm}, #{titleNm}, #{authrNm}, #{publisherNm}, #{pblicteDe}, #{adtionSmblNm}, #{imageUrl}, #{bookIntrcnCn}, #{kdcNm}, #{titleSbstNm}, #{authrSbstNm}, #{twoPblicteDe}, #{isbnNo})
+    </insert>
+    
+    <delete id="deleteBook" parameterType="int">
+        DELETE FROM books WHERE SEQ_NO = #{seqNo}
+    </delete>
+    
+</mapper>

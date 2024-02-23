@@ -7,11 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookDto {
-	private String image;
+public class NaverDto2 {
     private String title;
     private String author;
-    private String description;
-    private String publisher;
-    private String pubdate;
 }

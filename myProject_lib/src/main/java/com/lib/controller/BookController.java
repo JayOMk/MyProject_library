@@ -45,6 +45,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BookController {
 	
+	@GetMapping("/test")
+	public String test() {
+		return "test";
+	}
+	
 	@GetMapping("/searchForm")
 	public String showNaverSearch() {
 		return "searchForm";
@@ -77,6 +82,7 @@ public class BookController {
 	       		   List<BookDto> searchResults = parseSearchResults(responseBody);
 	               model.addAttribute("searchResults", searchResults);
 
+//	       return "searchForm";<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 	       return "searchForm";
 	}
 	

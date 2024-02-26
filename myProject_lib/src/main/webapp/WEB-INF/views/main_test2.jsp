@@ -9,6 +9,9 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 	<title> Green Library </title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap')
+</style>
 	<!-- Bootstrap core CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -16,79 +19,12 @@
 	<link href="css/zonebiz/all.css" rel="stylesheet">
 	<!-- Custom styles for this template -->
 	<link href="css/zonebiz/style.css" rel="stylesheet">
-	<style>
-	    .sidebar {
-    	float: left;
-        background-color: #f8f9fa;
-        padding: 20px;
-        border-radius: 5px;
-	    height: 100vh; /* 높이를 화면 높이의 100%로 지정 */
-    }
-
-    .sidebar-item {
-        margin-bottom: 20px;
-    }
-
-    .sidebar-item h4 {
-        font-size: 20px;
-        color: #333;
-        margin-bottom: 10px;
-    }
-
-    .sidebar-item form {
-        margin-bottom: 15px;
-    }
-
-    .sidebar-item form .form-label {
-        color: #555;
-    }
-
-    .sidebar-item form .form-control {
-        margin-bottom: 10px;
-    }
-
-    .sidebar-item ul {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .sidebar-item ul li {
-        margin-bottom: 5px;
-    }
-
-    .sidebar-item ul li a {
-        color: #007bff;
-        text-decoration: none;
-    }
-
-    .sidebar-item ul li a:hover {
-        text-decoration: underline;
-    }
-
-	.content {
-	    float: left;
-	    width: 80%; /* 컨텐츠 영역의 너비를 화면의 80%로 지정 */
-	    height: 100vh; /* 높이를 화면 높이의 100%로 지정 */
-	}
-	
-	/* 미디어 쿼리를 사용하여 화면 크기에 따라 레이아웃을 조정 */
-	@media (max-width: 768px) {
-    /* 화면 너비가 768px 이하일 때 */
-	    .sidebar, .content {
-	        width: 100%; /* 사이드바와 컨텐츠 영역의 너비를 화면 너비의 100%로 조정 */
-	        height: auto; /* 높이를 자동으로 조정하여 비율을 유지 */
-	         .sidebar {
-	        display: none; /* 작은 화면에서는 사이드바를 숨김 */
-	    }
-	    .content {
-	        margin-left: 0; /* 작은 화면에서는 사이드바와 겹치지 않도록 여백을 제거 */
-	    }
-	}
-	
-	</style>
+	<link rel="stylesheet" href="/css/main.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
-<body>
+<script src="/js/main.js"></script>
+<body class="hero-anime"> 
+
 <div class="wrapper-main">
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-light top-nav">
@@ -101,7 +37,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
-									<li class="nav-item">
+					<li class="nav-item">
 						<a class="nav-link" href="main">홈</a>
 					</li>
 					<li class="nav-item">
@@ -111,7 +47,7 @@
 						<a class="nav-link" href="services.html">내 서재</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="services.html">도서검색</a>
+						<a class="nav-link" href="searchForm">도서검색</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="services.html">도서신청</a>
@@ -120,11 +56,17 @@
 						<a class="nav-link" href="services.html">게시판</a>
 					</li>
 				</ul>
+				<ul>
+					<h4>
+	                        <span>G</span><span>R</span><span>E</span><span>E</span><span>N</span> <span>L</span><span>I</span><span>B</span><span>R</span><span>A</span><span>R</span><span>Y</span><br>
+	                </h4>
+	                        <p>그린 도서관을 이용해주셔서 감사합니다.</p> 
+	                </ul>
             </div>
         </div>
     </nav>
-	
-	<!-- full Title -->
+    
+    	<!-- full Title -->
 	<div class="full-title">
 		<div class="container">
 		    <div class="row justify-content-center mt-5 mb-5">
@@ -133,9 +75,8 @@
 		    </div>
 		</div>
 	</div>
-    </div>
-     
-     <div class="wrapper-container" style="margin-bottom: 0;">
+	
+ <div class="wrapper-container">
   
 <div class="container-fluid">
     <div class="row">
@@ -185,89 +126,22 @@
             </div>
         </div>
         
-    <div class="col-lg-9 col-md-8 col-sm-7">
-    <div class="row justify-content-center mt-5 mb-5">
-        <div class="col-md-6">
-            <h2 class="text-center mt-4 mb-3">도서 검색</h2>
-            <form action="/api" method="GET">
-                <div class="input-group mb-3">
-                	        <select class="form-select" name="option">
-					            <option value="전체">전체</option>
-					            <option value="제목">제목</option>
-					            <option value="저자">저자</option>
-					            <option value="장르">장르</option>
-					        </select>	
-                    <input type="text" name="query" id="query" class="form-control" placeholder="검색어 입력">
-                    <button type="submit" class="btn btn-primary">검색</button>
-                </div>
-            </form>
+        <!-- 컨텐츠 영역 -->
+        <div class="col-lg-9 col-md-8 col-sm-7">
+            <div class="content">
+                <div class="section">
+                    <div class="col-12">
+                        <span><img id="img_main" alt="" src="/images/mainpage.png"></span>
+                    </div>  
+                </div>  
+            </div>
         </div>
-        </div>
-    <div class="portfolio-col">
-		<div class="container">
-			<div class="row">
-				<c:forEach items="${searchResults}" var="item">
-				<div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
-					<div class="card h-100">
-						<a class="hover-box" href="#">
-<!-- 							<div class="dot-full"> -->
-<!-- 								<i class="fas fa-link"></i> -->
-<!-- 							</div> -->
-							<img class="card-img-top" src="${item.image}" alt="" />
-						</a>
-   	                    <div class="card-body">
-                            <h5 class="card-title">${item.title}</h5><br>
-                            <h5 class="card-title">저자: ${item.author}</h5>
-                        </div>
-<!--    	                 <div class="card-body"> -->
-<%--                             <h5 class="card-title">${item.author}</h5> --%>
-<!--                         </div> -->
-                        <div class="card-body">
-                            <a href="#" class="card-link">대여 신청</a>
-                            <a href="#" class="card-link">예약 신청</a>
-                        </div>
-					</div>
-				</div>
-				</c:forEach>
-		  
-			<div class="pagination_bar">
-				<!-- Pagination -->
-				<ul class="pagination justify-content-center">
-					<li class="page-item">
-					  <a class="page-link" href="#" aria-label="Previous">
-						<span aria-hidden="true">&laquo;</span>
-						<span class="sr-only">Previous</span>
-					  </a>
-					</li>
-					<li class="page-item">
-					  <a class="page-link" href="#">1</a>
-					</li>
-					<li class="page-item">
-					  <a class="page-link" href="#">2</a>
-					</li>
-					<li class="page-item">
-					  <a class="page-link" href="#">3</a>
-					</li>
-					<li class="page-item">
-					  <a class="page-link" href="#" aria-label="Next">
-						<span aria-hidden="true">&raquo;</span>
-						<span class="sr-only">Next</span>
-					  </a>
-					</li>
-				</ul>
-			</div>
+    </div>
+</div>
 
-		</div>
-		<!-- /.container -->
-	</div>
-	
-	
-	</div>
-	</div>
-	</div>
-	</div>
-	
-    <!--footer starts from here-->
+</div>
+
+   <!--footer starts from here-->
     <footer class="footer">
         <div class="container bottom_border">
 				<div class="col-lg-3 col-md-6 col-sm-6 ">
@@ -279,11 +153,13 @@
             </p>
         </div>
     </footer>
-</div>
+<div id="mm-blocker" class="mm-slideout"></div>
+
 <!-- Bootstrap core JavaScript -->
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="js/jquery.appear.js"></script>
 <script src="js/script.js"></script>
+
 </body>
 </html>

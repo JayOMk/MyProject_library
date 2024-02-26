@@ -5,6 +5,28 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.lib.dao.BookDao">
+	
+    <resultMap id="bookResultMap" type="com.lib.dto.RealBookDto">
+        <id property="seqNo" column="SEQ_NO"/>
+        <result property="isbnThirteenNo" column="ISBN_THIRTEEN_NO"/>
+        <result property="vlmNm" column="VLM_NM"/>
+        <result property="titleNm" column="TITLE_NM"/>
+        <result property="authrNm" column="AUTHR_NM"/>
+        <result property="publisherNm" column="PUBLISHER_NM"/>
+        <result property="pblicteDe" column="PBLICTE_DE"/>
+        <result property="adtionSmblNm" column="ADTION_SMBL_NM"/>
+        <result property="imageUrl" column="IMAGE_URL"/>
+        <result property="bookIntrcnCn" column="BOOK_INTRCN_CN"/>
+        <result property="kdcNm" column="KDC_NM"/>
+        <result property="titleSbstNm" column="TITLE_SBST_NM"/>
+        <result property="authrSbstNm" column="AUTHR_SBST_NM"/>
+        <result property="twoPblicteDe" column="TWO_PBLICTE_DE"/>
+        <result property="isbnNo" column="ISBN_NO"/>
+    </resultMap>
+
+    <select id="getAllBooks" resultMap="bookResultMap">
+        SELECT * FROM books
+    </select>
 
     <insert id="addBook" parameterType="com.lib.dto.BookDto">
         INSERT INTO books (SEQ_NO, ISBN_THIRTEEN_NO, VLM_NM, TITLE_NM, AUTHR_NM, PUBLISHER_NM, PBLICTE_DE, ADTION_SMBL_NM, IMAGE_URL, BOOK_INTRCN_CN, KDC_NM, TITLE_SBST_NM, AUTHR_SBST_NM, TWO_PBLICTE_DE, ISBN_NO)

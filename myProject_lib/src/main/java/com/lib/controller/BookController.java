@@ -37,6 +37,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lib.dto.BookDto;
+import com.lib.dto.RealBookDto;
 import com.lib.service.BookService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -45,9 +46,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BookController {
 	
-	@GetMapping("/test")
+	@GetMapping("/main_test2")
 	public String test() {
-		return "test";
+		return "main_test2";
 	}
 	
 	@GetMapping("/searchForm")
@@ -174,6 +175,13 @@ public class BookController {
 	    
 	@Autowired
 	private BookService bookService;
+	
+//    @GetMapping("/books")
+//    public String getAllBooks(Model model) {
+//        List<RealBookDto> books = bookService.getAllBooks();
+//        model.addAttribute("books", books);
+//        return "booksPage"; // booksPage.jsp로 이동
+//    }
 
     @GetMapping("/add")
     public String showAddBookForm() {

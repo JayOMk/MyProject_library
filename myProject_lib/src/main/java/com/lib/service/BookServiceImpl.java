@@ -2,6 +2,7 @@ package com.lib.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,11 @@ public class BookServiceImpl implements BookService{
     public void deleteBook(int seqNo) {
         BookDao dao = sqlSession.getMapper(BookDao.class);
         dao.deleteBook(seqNo);
+    }
+    
+    @Override
+    public List<RealBookDto> getAllBooks() {
+        BookDao dao = sqlSession.getMapper(BookDao.class);
+        return dao.getAllBooks();
     }
 }

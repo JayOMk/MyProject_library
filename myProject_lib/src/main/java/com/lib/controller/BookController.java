@@ -46,6 +46,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BookController {
 	
+	@Autowired
+	private BookService bookService;
+	
 	@GetMapping("/main_test2")
 	public String test() {
 		return "main_test2";
@@ -107,9 +110,10 @@ public class BookController {
 	                String description = itemNode.get("description").asText();
 	                String publisher = itemNode.get("publisher").asText();
 	                String pubdate = itemNode.get("pubdate").asText();
+	                String isbn = itemNode.get("isbn").asText();
 
 	                // 검색 결과를 BookDto 객체로 생성하여 리스트에 추가
-	                BookDto book = new BookDto(image, title, author, description, publisher, pubdate);
+	                BookDto book = new BookDto(image, title, author, description, publisher, pubdate, isbn);
 	                searchResults.add(book);
 	            }
 	        }
@@ -173,8 +177,60 @@ public class BookController {
 	        }
 	    }
 	    
-	@Autowired
-	private BookService bookService;
+
+	    @GetMapping("/bookDetailPage/{isbn}")
+	    public String showBookDetail(@PathVariable String isbn, Model model) {
+	        String ClientId = "kZStdc88ZP0XFAcoSEv3";
+	        String ClientSecret = "M0Y3L0JJVZ";
+
+	        try {
+	            String apiURL = "https://openapi.naver.com/v1/search/book_adv.json?d_isbn=" + isbn;
+	            Map<String, String> requestHeaders = new HashMap<>();
+	            requestHeaders.put("X-Naver-Client-Id", ClientId);
+	            requestHeaders.put("X-Naver-Client-Secret", ClientSecret);
+	            
+	            System.out.println("API 요청 URL: " + apiURL);
+	            
+	            String responseBody = get(apiURL, requestHeaders);
+
+	            // 상세 정보를 가져오기 위한 메서드 호출
+	            BookDto bookDetail = parseBookDetail(responseBody);
+	            model.addAttribute("bookDetail", bookDetail);
+	        } catch (Exception e) {
+	        	e.printStackTrace();
+	        }
+
+	        return "bookDetailPage"; // 책 상세 정보 페이지로 이동
+	    }
+
+	    // 상세 정보를 파싱하는 메서드
+	    private BookDto parseBookDetail(String responseBody) {
+	        BookDto bookDetail = new BookDto();
+	        ObjectMapper objectMapper = new ObjectMapper();
+	        try {
+	            JsonNode jsonNode = objectMapper.readTree(responseBody);
+	            JsonNode itemsNode = jsonNode.get("items").get(0);
+
+	            String image = itemsNode.get("image").asText("");
+	            String title = itemsNode.get("title").asText();
+	            String author = itemsNode.get("author").asText("");
+	            String description = itemsNode.get("description").asText();
+	            String publisher = itemsNode.get("publisher").asText();
+	            String pubdate = itemsNode.get("pubdate").asText();
+	            String isbn = itemsNode.get("isbn").asText();
+
+	            bookDetail.setImage(image);
+	            bookDetail.setTitle(title);
+	            bookDetail.setAuthor(author);
+	            bookDetail.setDescription(description);
+	            bookDetail.setPublisher(publisher);
+	            bookDetail.setPubdate(pubdate);
+	            bookDetail.setIsbn(isbn);
+	        } catch (JsonProcessingException e) {
+	            e.printStackTrace();
+	        }
+	        return bookDetail;
+	    }
 	
 //    @GetMapping("/books")
 //    public String getAllBooks(Model model) {
@@ -182,6 +238,26 @@ public class BookController {
 //        model.addAttribute("books", books);
 //        return "booksPage"; // booksPage.jsp로 이동
 //    }
+	
+	
+	@GetMapping("/searchByTitle")
+	public String searchByTitle(@RequestParam("title") String title, Model model) {
+	    // 제목으로 도서를 검색하는 로직을 구현하세요.
+	    // BookService의 적절한 메서드를 호출하여 검색 결과를 가져옵니다.
+	    List<BookDto> searchResults = bookService.searchByTitle(title);
+	    model.addAttribute("searchResults", searchResults);
+	    return "searchForm"; // 검색 결과를 보여주는 페이지로 이동
+	}
+
+	@GetMapping("/searchByAuthor")
+	public String searchByAuthor(@RequestParam("author") String author, Model model) {
+	    // 저자로 도서를 검색하는 로직을 구현하세요.
+	    // BookService의 적절한 메서드를 호출하여 검색 결과를 가져옵니다.
+	    List<BookDto> searchResults = bookService.searchByAuthor(author);
+	    model.addAttribute("searchResults", searchResults);
+	    return "searchForm"; // 검색 결과를 보여주는 페이지로 이동
+	}
+	
 
     @GetMapping("/add")
     public String showAddBookForm() {

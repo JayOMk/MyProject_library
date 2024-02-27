@@ -14,4 +14,5 @@ public class BookDto {
     private String description;
     private String publisher;
     private String pubdate;
+    private String isbn;
 }

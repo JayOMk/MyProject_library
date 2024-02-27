@@ -36,23 +36,26 @@ public class UserController {
 		return "login";
 	}
 	
-	@PostMapping("/loginYn")
-	public String login_yn(@RequestParam HashMap<String, String>param) {
-		log.info("@# loginYn");
-		
-		ArrayList<UserDto> dtos = service.loginYn(param);
-		log.info("@# dtos: "+dtos);
-		
-		if (dtos.isEmpty()) {
-			return "redirect:login";
-		} else {
-			if (param.get("password").equals(dtos.get(0).getPassword())) {
-				return "redirect:main";
-			} else {
-			    return "redirect:login";
-			}
-		}				
-	}
+    // 로그인 성공 시 세션에 사용자 정보 저장
+    @PostMapping("/loginYn")
+    public String login_yn(@RequestParam HashMap<String, String> param, HttpSession session) {
+        log.info("@# loginYn");
+
+        ArrayList<UserDto> dtos = service.loginYn(param);
+        log.info("@# dtos: " + dtos);
+
+        if (dtos.isEmpty()) {
+            return "redirect:login";
+        } else {
+            if (param.get("password").equals(dtos.get(0).getPassword())) {
+                // 로그인 성공 시 사용자 정보를 세션에 저장
+                session.setAttribute("userEmail", dtos.get(0).getEmail());
+                return "redirect:main";
+            } else {
+                return "redirect:login";
+            }
+        }
+    }
 	
 	@RequestMapping("/main")
 	public String main() {
@@ -91,7 +94,7 @@ public class UserController {
 	    sqlSession.getMapper(UserDao.class).signUp(userDto);
 
 	    // 회원 가입 성공 시 세션에 사용자 정보 저장
-	    session.setAttribute("empno", param.get("empno"));
+	    session.setAttribute("email", param.get("email"));
 
 	    return "redirect:/login"; 
 	}

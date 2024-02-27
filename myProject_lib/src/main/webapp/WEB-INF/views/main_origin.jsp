@@ -55,13 +55,33 @@
 					<li class="nav-item">
 						<a class="nav-link" href="services.html">게시판</a>
 					</li>
+<!-- 					<li class="nav-item dropdown"> -->
+<!-- 						<a class="nav-link" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages <i class="fas fa-sort-down"></i></a> -->
+<!-- 						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog"> -->
+<!-- 							<a class="dropdown-item" href="faq.html">FAQ</a> -->
+<!-- 							<a class="dropdown-item" href="404.html">404</a> -->
+<!-- 							<a class="dropdown-item" href="pricing.html">Pricing Table</a> -->
+<!-- 						</div> -->
+<!-- 					</li> -->
+<!-- 					<li class="nav-item dropdown"> -->
+<!-- 						<a class="nav-link active" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">도서검색 <i class="fas fa-sort-down"></i></a> -->
+<!-- 						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio"> -->
+<!-- 							<a class="dropdown-item" href="portfolio-3-col.html">전체 검색</a> -->
+<!-- 							<a class="dropdown-item" href="portfolio-4-col.html">4 Column Portfolio</a> -->
+<!-- 							<a class="dropdown-item" href="portfolio-item.html">Single Portfolio Item</a> -->
+<!-- 						</div> -->
+<!-- 					</li> -->
+<!-- 					<li class="nav-item dropdown"> -->
+<!-- 						<a class="nav-link" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blog <i class="fas fa-sort-down"></i></a> -->
+<!-- 						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog"> -->
+<!-- 							<a class="dropdown-item" href="blog.html">Blog</a> -->
+<!-- 							<a class="dropdown-item" href="blog-post.html">Blog Post</a> -->
+<!-- 						</div> -->
+<!-- 					</li> -->
+<!-- 					<li class="nav-item"> -->
+<!-- 						<a class="nav-link" href="contact.html">Contact</a> -->
+<!-- 					</li> -->
 				</ul>
-				<ul>
-					<h4>
-	                        <span>G</span><span>R</span><span>E</span><span>E</span><span>N</span> <span>L</span><span>I</span><span>B</span><span>R</span><span>A</span><span>R</span><span>Y</span><br>
-	                </h4>
-	                        <p>그린 도서관을 이용해주셔서 감사합니다.</p> 
-	                </ul>
             </div>
         </div>
     </nav>
@@ -75,71 +95,28 @@
 		    </div>
 		</div>
 	</div>
-	
- <div class="wrapper-container">
   
-<div class="container-fluid">
-    <div class="row">
-        <!-- 사이드바 영역 -->
-        <div class="col-lg-3 col-md-4 col-sm-5">
-            <div class="sidebar">
-                <!-- 로그인 입력 칸 -->
-                <div class="sidebar-item">
-                    <h4>로그인</h4>
-                    <form id="loginForm" action="loginYn" method="post">
-                        <div class="mb-3">
-                            <label for="username" class="form-label">사용자 이메일</label>
-                            <input type="email" class="form-control" id="email" placeholder="ex)abc@abc.com"required="required"/>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">비밀번호</label>
-                            <input type="password" class="form-control" id="password" required="required"/>
-                        </div>
-                        <button type="submit" class="btn btn-primary">로그인</button>
-                        <button type="submit" class="btn btn-primary">회원가입</button>
-                    </form>
-                </div>
-                <div style="border-bottom:1px solid #eaeaea;"></div>
-
-                <!-- 내 서재 칸 -->
-                <div class="sidebar-item">
-                    <h4>내 서재</h4>
-                    <!-- 내 서재 링크 추가 -->
-                    <ul>
-                        <li><a href="#">도서 대출내역</a></li>
-                        <li><a href="#">도서 예약내역</a></li>
-                        <li><a href="#">독후감</a></li>
-                    </ul>
-                </div>
-				<div style="border-bottom:1px solid #eaeaea;"></div>
-				
-                <!-- 공지사항 칸 -->
-                <div class="sidebar-item">
-                    <h4>공지사항</h4>
-                    <!-- 공지사항 목록 추가 -->
-                    <ul>
-                        <li><a href="#">WELCOME</a></li>
-                        <li><a href="#">이용안내</a></li>
-                        <li><a href="#">주의사항</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        
-        <!-- 컨텐츠 영역 -->
-        <div class="col-lg-9 col-md-8 col-sm-7">
-            <div class="content">
-                <div class="section">
-                    <div class="col-12">
-                        <span><img id="img_main" alt="" src="/images/mainpage.png"></span>
-                    </div>  
-                </div>  
-            </div>
-        </div>
-    </div>
-</div>
-
-</div>
+  <div class="section full-height">
+    <div class="absolute-center">
+      <div class="section">
+<!--         <div class="container"> -->
+<!--           <div class="row"> -->
+            <div class="col-12">
+ 			<span><img id="img_main" alt="" src="/images/mainpage.png"></span>
+        <h1>
+        	<span>G</span><span>R</span><span>E</span><span>E</span><span>N</span> <span>L</span><span>I</span><span>B</span><span>R</span><span>A</span><span>R</span><span>Y</span><br>
+        </h1>
+        <p>그린 도서관을 이용해주셔서 감사합니다.</p> 
+            </div>  
+<!--           </div>     -->
+<!--         </div>     -->
+      </div>  
+        </div>      
+      </div>
+ </div>
+  
+  <div class="my-5 py-5">
+  </div>
 
    <!--footer starts from here-->
     <footer class="footer">

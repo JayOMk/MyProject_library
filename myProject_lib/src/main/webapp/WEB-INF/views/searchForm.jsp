@@ -86,6 +86,9 @@
 	    }
 	}
 	
+	.mb-5{
+		margin-bottom: 0px;
+	}
 	</style>
 </head>
 <body>
@@ -135,7 +138,7 @@
 	</div>
     </div>
      
-     <div class="wrapper-container" style="margin-bottom: 0;">
+     <div class="wrapper-container">
   
 <div class="container-fluid">
     <div class="row">
@@ -186,7 +189,7 @@
         </div>
         
     <div class="col-lg-9 col-md-8 col-sm-7">
-    <div class="row justify-content-center mt-5 mb-5">
+    <div class="row justify-content-center mt-5 mb-5" >
         <div class="col-md-6">
             <h2 class="text-center mt-4 mb-3">도서 검색</h2>
             <form action="/api" method="GET">
@@ -195,7 +198,6 @@
 					            <option value="전체">전체</option>
 					            <option value="제목">제목</option>
 					            <option value="저자">저자</option>
-					            <option value="장르">장르</option>
 					        </select>	
                     <input type="text" name="query" id="query" class="form-control" placeholder="검색어 입력">
                     <button type="submit" class="btn btn-primary">검색</button>
@@ -223,8 +225,8 @@
 <%--                             <h5 class="card-title">${item.author}</h5> --%>
 <!--                         </div> -->
                         <div class="card-body">
-                            <a href="#" class="card-link">대여 신청</a>
-                            <a href="#" class="card-link">예약 신청</a>
+                            <a href="/bookDetailPage/${item.isbn}" class="card-link">상세 정보</a>
+                            <a href="#" class="card-link">대출 신청</a>
                         </div>
 					</div>
 				</div>
@@ -285,5 +287,40 @@
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="js/jquery.appear.js"></script>
 <script src="js/script.js"></script>
+
+
 </body>
 </html>
+
+<script type="text/javascript">
+    /* 회원가입 버튼 클릭 시 동작하는 함수 */
+         function submitRegistration() {
+        	    var email = $("#signup-email").val();
+        	    var username = $("#signup-username").val();
+        	    var phonenumber = $("#phonenumber").val();
+        	    var password = $("#signup-password").val();
+
+        	    var formData = {
+        	        email: email,
+        	        name: username,
+        	        phone: phonenumber,
+        	        password: password,
+        	    };
+    	
+                // 회원가입 데이터를 서버로 전송하는 Ajax 호출
+                $.ajax({
+                    type: "POST",
+                    url: "signUp",
+                    data: formData,
+                    success: function (data) {
+                        alert("회원가입이 완료되었습니다.");
+                        window.location.href = "login";
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                        alert("회원가입 중 오류가 발생했습니다. 다시 시도해주세요.");
+                    },
+                });
+    }
+</script>
+

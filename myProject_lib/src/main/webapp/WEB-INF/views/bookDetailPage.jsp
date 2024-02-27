@@ -9,9 +9,6 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 	<title> Green Library </title>
-    <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap')
-</style>
 	<!-- Bootstrap core CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -19,12 +16,82 @@
 	<link href="css/zonebiz/all.css" rel="stylesheet">
 	<!-- Custom styles for this template -->
 	<link href="css/zonebiz/style.css" rel="stylesheet">
-	<link rel="stylesheet" href="/css/main.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-</head>
-<script src="/js/main.js"></script>
-<body class="hero-anime"> 
+	<style>
+	    .sidebar {
+    	float: left;
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 5px;
+	    height: 100vh; /* 높이를 화면 높이의 100%로 지정 */
+    }
 
+    .sidebar-item {
+        margin-bottom: 20px;
+    }
+
+    .sidebar-item h4 {
+        font-size: 20px;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .sidebar-item form {
+        margin-bottom: 15px;
+    }
+
+    .sidebar-item form .form-label {
+        color: #555;
+    }
+
+    .sidebar-item form .form-control {
+        margin-bottom: 10px;
+    }
+
+    .sidebar-item ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .sidebar-item ul li {
+        margin-bottom: 5px;
+    }
+
+    .sidebar-item ul li a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .sidebar-item ul li a:hover {
+        text-decoration: underline;
+    }
+
+	.content {
+	    float: left;
+	    width: 80%; /* 컨텐츠 영역의 너비를 화면의 80%로 지정 */
+	    height: 100vh; /* 높이를 화면 높이의 100%로 지정 */
+	}
+	
+	/* 미디어 쿼리를 사용하여 화면 크기에 따라 레이아웃을 조정 */
+	@media (max-width: 768px) {
+    /* 화면 너비가 768px 이하일 때 */
+	    .sidebar, .content {
+	        width: 100%; /* 사이드바와 컨텐츠 영역의 너비를 화면 너비의 100%로 조정 */
+	        height: auto; /* 높이를 자동으로 조정하여 비율을 유지 */
+	         .sidebar {
+	        display: none; /* 작은 화면에서는 사이드바를 숨김 */
+	    }
+	    .content {
+	        margin-left: 0; /* 작은 화면에서는 사이드바와 겹치지 않도록 여백을 제거 */
+	    }
+	}
+	
+	.mb-5{
+		margin-bottom: 0px;
+	}
+	</style>
+</head>
+<body>
 <div class="wrapper-main">
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-light top-nav">
@@ -37,7 +104,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item">
+									<li class="nav-item">
 						<a class="nav-link" href="main">홈</a>
 					</li>
 					<li class="nav-item">
@@ -47,7 +114,7 @@
 						<a class="nav-link" href="services.html">내 서재</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="searchForm">도서검색</a>
+						<a class="nav-link" href="services.html">도서검색</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="services.html">도서신청</a>
@@ -56,17 +123,11 @@
 						<a class="nav-link" href="services.html">게시판</a>
 					</li>
 				</ul>
-				<ul>
-					<h4>
-	                        <span>G</span><span>R</span><span>E</span><span>E</span><span>N</span> <span>L</span><span>I</span><span>B</span><span>R</span><span>A</span><span>R</span><span>Y</span><br>
-	                </h4>
-	                        <p>그린 도서관을 이용해주셔서 감사합니다.</p> 
-	                </ul>
             </div>
         </div>
     </nav>
-    
-    	<!-- full Title -->
+	
+	<!-- full Title -->
 	<div class="full-title">
 		<div class="container">
 		    <div class="row justify-content-center mt-5 mb-5">
@@ -75,13 +136,14 @@
 		    </div>
 		</div>
 	</div>
-	
- <div class="wrapper-container">
+    </div>
+     
+     <div class="wrapper-container">
   
 <div class="container-fluid">
     <div class="row">
         <!-- 사이드바 영역 -->
-        <div class="col-lg-3 col-md-4 col-sm-5">
+        <div class="col-lg-2 col-md-4 col-sm-5">
             <div class="sidebar">
                 <!-- 로그인 입력 칸 -->
                 <div class="sidebar-item">
@@ -126,22 +188,42 @@
             </div>
         </div>
         
-        <!-- 컨텐츠 영역 -->
-        <div class="col-lg-9 col-md-8 col-sm-7">
-            <div class="content">
-                <div class="section">
-                    <div class="col-12">
-                        <span><img id="img_main" alt="" src="/images/mainpage.png"></span>
-                    </div>  
-                </div>  
-            </div>
-        </div>
-    </div>
-</div>
-
-</div>
-
-   <!--footer starts from here-->
+    <div class="col-lg-9 col-md-8 col-sm-7">
+    <div class="row justify-content-center mt-5 mb-5" >
+        <div class="col-md-10">
+          <div class="item-pro">
+		<div class="container">
+			<!-- Portfolio Item Row -->
+			<div class="row">
+				<div class="col-md-8">
+					<img class="img-fluid" src="${bookDetail.image}" alt="" />
+				</div>
+				<div class="col-md-4">
+					<h3 class="my-3">${bookDetail.title}</h3>
+<%-- 					<p>${bookDetail.description}</p> --%>
+					<h3 class="my-3">도서 정보</h3>
+					<ul>
+						<li><span>저자 :</span><span>${bookDetail.author}</span></li>
+						<li><span>ISBN :</span><span>${bookDetail.isbn}</span></li>
+						<li><span>출판사 :</span><span>${bookDetail.publisher}</span></li>
+						<li><span>출간일 :</span><span>${bookDetail.pubdate}</span></li>
+					</ul>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<p class="mt-3">${bookDetail.description}</p>
+				</div>
+			</div>
+		</div> <!-- /.container -->
+		</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	
+    <!--footer starts from here-->
     <footer class="footer">
         <div class="container bottom_border">
 				<div class="col-lg-3 col-md-6 col-sm-6 ">
@@ -153,13 +235,13 @@
             </p>
         </div>
     </footer>
-<div id="mm-blocker" class="mm-slideout"></div>
-
+</div>
 <!-- Bootstrap core JavaScript -->
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="js/jquery.appear.js"></script>
 <script src="js/script.js"></script>
+
 
 </body>
 </html>

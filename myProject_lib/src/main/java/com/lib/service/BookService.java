@@ -8,5 +8,8 @@ import com.lib.dto.RealBookDto;
 public interface BookService {
    public void addBook(BookDto book);
    public void deleteBook(int seqNo);
-   public List<RealBookDto> getAllBooks();
+   public BookDto getBookDetailByIsbn(String isbn);
+   public List<BookDto> getAllBooks();
+   public List<BookDto> searchByTitle(String title);
+   public List<BookDto> searchByAuthor(String author);
 }

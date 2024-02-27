@@ -19,6 +19,20 @@ public class BookServiceImpl implements BookService{
 	
 	@Autowired
 	private SqlSession sqlSession;
+	
+    @Override
+    public BookDto getBookDetailByIsbn(String isbn) {
+        // ISBN을 기반으로 책의 상세 정보를 가져옵니다.
+        BookDto bookDetail = new BookDto();
+        bookDetail.setIsbn(isbn);
+        bookDetail.setImage("image");
+        bookDetail.setTitle("title");
+        bookDetail.setAuthor("author");
+        bookDetail.setPublisher("publisher");
+        bookDetail.setPubdate("pubdate");
+        bookDetail.setDescription("description");
+        return bookDetail;
+    }
 
 
     @Override
@@ -32,10 +46,22 @@ public class BookServiceImpl implements BookService{
         BookDao dao = sqlSession.getMapper(BookDao.class);
         dao.deleteBook(seqNo);
     }
-    
-    @Override
-    public List<RealBookDto> getAllBooks() {
-        BookDao dao = sqlSession.getMapper(BookDao.class);
-        return dao.getAllBooks();
-    }
+
+	@Override
+	public List<BookDto> searchByTitle(String title) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<BookDto> searchByAuthor(String author) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<BookDto> getAllBooks() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

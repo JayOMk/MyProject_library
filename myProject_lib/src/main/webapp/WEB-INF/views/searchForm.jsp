@@ -114,7 +114,7 @@
 						<a class="nav-link" href="services.html">내 서재</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="services.html">도서검색</a>
+						<a class="nav-link" href="searchForm">도서검색</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="services.html">도서신청</a>

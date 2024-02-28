@@ -37,7 +37,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lib.dto.BookDto;
-import com.lib.dto.RealBookDto;
 import com.lib.service.BookService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -49,49 +48,65 @@ public class BookController {
 	@Autowired
 	private BookService bookService;
 	
-	@GetMapping("/main_test2")
+//	@GetMapping("/main_test2")
+//	public String test() {
+//		return "main_test2";
+//	}
+	
+	@GetMapping("/main")
 	public String test() {
-		return "main_test2";
+		return "main";
 	}
 	
 	@GetMapping("/searchForm")
 	public String showNaverSearch() {
-		return "searchForm";
+	    // 검색 폼으로 이동
+	    return "searchForm";
 	}
 	
 	@GetMapping("/api")
-	public String api(@RequestParam("query")String query,Model model) {
-		String ClientId = "kZStdc88ZP0XFAcoSEv3";
-		String ClientSecret = "M0Y3L0JJVZ";
-		
-		String text = query;
-		
-		try {
-			text =URLEncoder.encode(text,"UTF-8");
-			
-		}catch (UnsupportedEncodingException e) {
-			throw new RuntimeException("인코딩 실패",e);
-		}
-		
-		String apiURL = "https://openapi.naver.com/v1/search/book?query=" + text; 
-		
-		  Map<String, String> requestHeaders = new HashMap<>();
-	        requestHeaders.put("X-Naver-Client-Id", ClientId);
-	        requestHeaders.put("X-Naver-Client-Secret", ClientSecret);
-	        String responseBody = get(apiURL,requestHeaders);
+	public String api(@RequestParam("query") String query, Model model) {
+	    // 네이버 API를 사용하여 책 검색을 수행하고 검색 결과를 가져오는 메소드
 
+	    // 네이버 API 호출을 위한 클라이언트 ID와 시크릿 키
+	    String clientId = "kZStdc88ZP0XFAcoSEv3";
+	    String clientSecret = "M0Y3L0JJVZ";
 
-	       log.info("@# 책 검색 결과====>>>"+responseBody);
-	       
-	       		   List<BookDto> searchResults = parseSearchResults(responseBody);
-	               model.addAttribute("searchResults", searchResults);
+	    // 검색어를 UTF-8로 인코딩
+	    String text = query;
+	    try {
+	        text = URLEncoder.encode(text, "UTF-8");
+	    } catch (UnsupportedEncodingException e) {
+	        throw new RuntimeException("인코딩 실패", e);
+	    }
 
-//	       return "searchForm";<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-	       return "searchForm";
+	    // 네이버 책 검색 API 호출 URL 구성
+	    String apiUrl = "https://openapi.naver.com/v1/search/book?query=" + text;
+
+	    // 네이버 API 요청 헤더 설정
+	    Map<String, String> requestHeaders = new HashMap<>();
+	    requestHeaders.put("X-Naver-Client-Id", clientId);
+	    requestHeaders.put("X-Naver-Client-Secret", clientSecret);
+
+	    // 네이버 API 호출 및 응답 데이터 가져오기
+	    String responseBody = get(apiUrl, requestHeaders);
+
+	    // 로그에 검색 결과 출력
+	    log.info("@# 책 검색 결과====>>>" + responseBody);
+
+	    // 검색 결과를 파싱하여 BookDto 객체의 리스트로 변환
+	    List<BookDto> searchResults = parseSearchResults(responseBody);
+
+	    // 검색 결과를 모델에 추가하여 뷰로 전달
+	    model.addAttribute("searchResults", searchResults);
+
+	    // searchForm.jsp로 이동
+	    return "searchForm";
 	}
 	
-	// 검색 결과를 파싱하여 BookDto 객체의 리스트로 반환하는 메서드
+	// 검색 결과를 파싱하여 BookDto 객체의 리스트로 반환하는 메소드
 	public List<BookDto> parseSearchResults(String responseBody) {
+	    // 파싱된 검색 결과를 담을 리스트 생성
 	    List<BookDto> searchResults = new ArrayList<>();
 
 	    // Jackson ObjectMapper를 사용하여 JSON 문자열을 객체로 변환
@@ -103,8 +118,9 @@ public class BookController {
 	        // 필요한 데이터 추출
 	        JsonNode itemsNode = jsonNode.get("items");
 	        if (itemsNode != null && itemsNode.isArray()) {
+	            // 각 책 정보를 순회하며 필요한 데이터 추출
 	            for (JsonNode itemNode : itemsNode) {
-	            	String image = itemNode.get("image").asText("");
+	                String image = itemNode.get("image").asText("");
 	                String title = itemNode.get("title").asText();
 	                String author = itemNode.get("author").asText("");
 	                String description = itemNode.get("description").asText();
@@ -118,99 +134,131 @@ public class BookController {
 	            }
 	        }
 	    } catch (JsonProcessingException e) {
+	        // JSON 파싱 예외 처리
 	        e.printStackTrace();
 	    }
 
+	    // 검색 결과 리스트 반환
 	    return searchResults;
 	}
 
 	private static String get(String apiUrl, Map<String, String> requestHeaders){
-        HttpURLConnection con = connect(apiUrl);
-        try {
-            con.setRequestMethod("GET");
-            for(Map.Entry<String, String> header :requestHeaders.entrySet()) {
-                con.setRequestProperty(header.getKey(), header.getValue());
-            }
+	    // 외부 API에 GET 요청을 보내고 응답을 반환하는 메소드
 
+	    // API에 연결하기 위한 HttpURLConnection 객체 생성
+	    HttpURLConnection con = connect(apiUrl);
+	    try {
+	        // GET 요청 설정
+	        con.setRequestMethod("GET");
 
-            int responseCode = con.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) { // 정상 호출
-                return readBody(con.getInputStream());
-            } else { // 오류 발생
-                return readBody(con.getErrorStream());
-            }
-        } catch (IOException e) {
-            throw new RuntimeException("API 요청과 응답 실패", e);
-        } finally {
-            con.disconnect();
-        }
-    }
-	 private static HttpURLConnection connect(String apiUrl){
-	        try {
-	            URL url = new URL(apiUrl);
-	            return (HttpURLConnection)url.openConnection();
-	        } catch (MalformedURLException e) {
-	            throw new RuntimeException("API URL이 잘못되었습니다. : " + apiUrl, e);
-	        } catch (IOException e) {
-	            throw new RuntimeException("연결이 실패했습니다. : " + apiUrl, e);
+	        // 요청 헤더 설정
+	        for (Map.Entry<String, String> header : requestHeaders.entrySet()) {
+	            con.setRequestProperty(header.getKey(), header.getValue());
 	        }
-	    }
 
-
-	    private static String readBody(InputStream body){
-	        InputStreamReader streamReader = new InputStreamReader(body);
-
-
-	        try (BufferedReader lineReader = new BufferedReader(streamReader)) {
-	            StringBuilder responseBody = new StringBuilder();
-
-
-	            String line;
-	            while ((line = lineReader.readLine()) != null) {
-	                responseBody.append(line);
-	            }
-
-
-	            return responseBody.toString();
-	        } catch (IOException e) {
-	            throw new RuntimeException("API 응답을 읽는 데 실패했습니다.", e);
+	        // 응답 코드 확인
+	        int responseCode = con.getResponseCode();
+	        if (responseCode == HttpURLConnection.HTTP_OK) { // 정상 응답인 경우
+	            // 응답 본문을 읽어서 문자열로 반환
+	            return readBody(con.getInputStream());
+	        } else { // 오류 응답인 경우
+	            // 오류 응답 본문을 읽어서 문자열로 반환
+	            return readBody(con.getErrorStream());
 	        }
+	    } catch (IOException e) {
+	        // API 요청과 응답 실패 시 예외 처리
+	        throw new RuntimeException("API 요청과 응답 실패", e);
+	    } finally {
+	        // 연결 종료
+	        con.disconnect();
 	    }
+	}
+	
+	// API에 연결하는 메소드
+	private static HttpURLConnection connect(String apiUrl){
+	    try {
+	        // API URL로부터 HttpURLConnection 객체 생성하여 반환
+	        URL url = new URL(apiUrl);
+	        return (HttpURLConnection)url.openConnection();
+	    } catch (MalformedURLException e) {
+	        // 잘못된 API URL 예외 처리
+	        throw new RuntimeException("API URL이 잘못되었습니다. : " + apiUrl, e);
+	    } catch (IOException e) {
+	        // 연결 실패 예외 처리
+	        throw new RuntimeException("연결이 실패했습니다. : " + apiUrl, e);
+	    }
+	}
+
+
+	// API 응답 본문을 읽어서 문자열로 반환하는 메소드
+	private static String readBody(InputStream body){
+	    // API 응답 본문을 읽어서 문자열로 반환하는 메소드
+
+	    // InputStream을 InputStreamReader로 변환하여 BufferedReader로 읽음
+	    try (BufferedReader lineReader = new BufferedReader(new InputStreamReader(body))) {
+	        // 응답 본문을 저장할 StringBuilder 객체 생성
+	        StringBuilder responseBody = new StringBuilder();
+
+	        // 한 줄씩 읽어서 responseBody에 추가
+	        String line;
+	        while ((line = lineReader.readLine()) != null) {
+	            responseBody.append(line);
+	        }
+
+	        // 완성된 응답 본문을 문자열로 반환
+	        return responseBody.toString();
+	    } catch (IOException e) {
+	        // 읽기 실패 예외 처리
+	        throw new RuntimeException("API 응답을 읽는 데 실패했습니다.", e);
+	    }
+	}
 	    
-
+		// 상세 페이지 메소드
 	    @GetMapping("/bookDetailPage/{isbn}")
 	    public String showBookDetail(@PathVariable String isbn, Model model) {
-	        String ClientId = "kZStdc88ZP0XFAcoSEv3";
-	        String ClientSecret = "M0Y3L0JJVZ";
+	        // 네이버 Open API에 접근하기 위한 클라이언트 정보 설정
+	        String clientId = "kZStdc88ZP0XFAcoSEv3";
+	        String clientSecret = "M0Y3L0JJVZ";
 
 	        try {
+	            // 책의 ISBN을 사용하여 네이버 책 검색 API를 호출하기 위한 URL 생성
 	            String apiURL = "https://openapi.naver.com/v1/search/book_adv.json?d_isbn=" + isbn;
+	            
+	            // API 요청 헤더 설정
 	            Map<String, String> requestHeaders = new HashMap<>();
-	            requestHeaders.put("X-Naver-Client-Id", ClientId);
-	            requestHeaders.put("X-Naver-Client-Secret", ClientSecret);
+	            requestHeaders.put("X-Naver-Client-Id", clientId);
+	            requestHeaders.put("X-Naver-Client-Secret", clientSecret);
 	            
-	            System.out.println("API 요청 URL: " + apiURL);
-	            
+	            // API 호출 및 응답 받아오기
 	            String responseBody = get(apiURL, requestHeaders);
 
-	            // 상세 정보를 가져오기 위한 메서드 호출
+	            // 응답 데이터를 분석하여 책의 상세 정보를 가져옴
 	            BookDto bookDetail = parseBookDetail(responseBody);
+	            
+	            // 모델에 책의 상세 정보를 추가하여 뷰로 전달
 	            model.addAttribute("bookDetail", bookDetail);
 	        } catch (Exception e) {
-	        	e.printStackTrace();
+	            // 예외 처리
+	            e.printStackTrace();
 	        }
 
-	        return "bookDetailPage"; // 책 상세 정보 페이지로 이동
+	        // 책 상세 정보 페이지로 이동
+	        return "bookDetailPage";
 	    }
 
 	    // 상세 정보를 파싱하는 메서드
 	    private BookDto parseBookDetail(String responseBody) {
+	        // 책의 상세 정보를 저장할 BookDto 객체 생성
 	        BookDto bookDetail = new BookDto();
+	        
+	        // Jackson ObjectMapper를 사용하여 JSON 응답 데이터를 처리
 	        ObjectMapper objectMapper = new ObjectMapper();
 	        try {
+	            // JSON 문자열을 JsonNode로 변환
 	            JsonNode jsonNode = objectMapper.readTree(responseBody);
+	            
+	            // 필요한 정보 추출
 	            JsonNode itemsNode = jsonNode.get("items").get(0);
-
 	            String image = itemsNode.get("image").asText("");
 	            String title = itemsNode.get("title").asText();
 	            String author = itemsNode.get("author").asText("");
@@ -218,7 +266,8 @@ public class BookController {
 	            String publisher = itemsNode.get("publisher").asText();
 	            String pubdate = itemsNode.get("pubdate").asText();
 	            String isbn = itemsNode.get("isbn").asText();
-
+	            
+	            // 책의 상세 정보를 BookDto 객체에 저장
 	            bookDetail.setImage(image);
 	            bookDetail.setTitle(title);
 	            bookDetail.setAuthor(author);
@@ -227,8 +276,11 @@ public class BookController {
 	            bookDetail.setPubdate(pubdate);
 	            bookDetail.setIsbn(isbn);
 	        } catch (JsonProcessingException e) {
+	            // 예외 처리
 	            e.printStackTrace();
 	        }
+	        
+	        // 완성된 BookDto 객체 반환
 	        return bookDetail;
 	    }
 	

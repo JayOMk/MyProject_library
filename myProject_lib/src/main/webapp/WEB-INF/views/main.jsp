@@ -61,7 +61,7 @@
 	                        <span>G</span><span>R</span><span>E</span><span>E</span><span>N</span> <span>L</span><span>I</span><span>B</span><span>R</span><span>A</span><span>R</span><span>Y</span><br>
 	                </h4>
 	                        <p>그린 도서관을 이용해주셔서 감사합니다.</p> 
-	                </ul>
+	            </ul>
             </div>
         </div>
     </nav>

@@ -3,7 +3,6 @@ package com.lib.service;
 import java.util.List;
 
 import com.lib.dto.BookDto;
-import com.lib.dto.RealBookDto;
 
 public interface BookService {
    public void addBook(BookDto book);

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NaverDto2 {
-    private String title;
-    private String author;
+public class RoleDto {
+    private int id;
+    private String name;
 }

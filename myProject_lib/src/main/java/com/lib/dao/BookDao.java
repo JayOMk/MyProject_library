@@ -3,7 +3,6 @@ package com.lib.dao;
 import java.util.List;
 
 import com.lib.dto.BookDto;
-import com.lib.dto.RealBookDto;
 
 public interface BookDao {
    public void addBook(BookDto book);

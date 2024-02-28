@@ -1,19 +1,55 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-<mapper namespace="com.lib.dao.UserDao">
     
-    <select id="loginYn" parameterType="hashmap"  resultType="com.lib.dto.UserDto">
-        select password from member where email=#{email}
-    </select>
-    
-    <insert id="write" parameterType="hashmap">
-    	insert into member (email, name, phone, password) values(#{email},#{name},#{phone},#{password})
-    </insert>
-    
-    <insert id="signUp" parameterType="hashmap">
-   	 insert into member (email, name, phone, password) values(#{email},#{name},#{phone},#{password})
+<mapper namespace="user">
+ 
+	<select id="overlapCheck" resultType="int">
+		SELECT COUNT(*) FROM USER WHERE ${valueType } = #{value }
+	</select>
+	
+	<insert id="register">
+		INSERT INTO USER (
+			ID,
+			EMAIL,
+			USERNAME,
+			PASSWORD,
+			PHONE,
+			ADDRESS
+		) VALUES (
+			USER_ID_SEQ.NEXTVAL,
+			#{username },
+			#{password },
+			#{email },
+			#{phone },
+			#{address }
+		)
 	</insert>
+</mapper> 
 
-</mapper>
+<!-- <mapper namespace="com.lib.dao.UserDao"> -->
+    
+<!--     <select id="loginYn" parameterType="hashmap"  resultType="com.lib.dto.UserDto"> -->
+<!--         select password from member where email=#{email} -->
+<!--     </select> -->
+    
+<!--     <insert id="write" parameterType="hashmap"> -->
+<!--     	insert into member (email, name, phone, password) values(#{email},#{name},#{phone},#{password}) -->
+<!--     </insert> -->
+    
+<!--     <insert id="signUp" parameterType="hashmap"> -->
+<!--    	 insert into member (email, name, phone, password) values(#{email},#{name},#{phone},#{password}) -->
+<!-- 	</insert> -->
+	
+<!-- 	<select id="login" resultType="User"> -->
+<!--     SELECT *  -->
+<!--     FROM  -->
+<!--     	USER -->
+<!--     LEFT JOIN  -->
+<!--         (SELECT USER_ID, SUM(POINT) POINT FROM BM_POINT GROUP BY USER_ID) P -->
+<!--     ON  -->
+<!--         U.ID = P.USER_ID -->
+<!--     WHERE U.USERNAME = #{username }     -->
+<!-- </select> -->
+
+<!-- </mapper> -->

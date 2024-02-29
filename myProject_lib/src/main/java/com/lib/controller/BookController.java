@@ -65,7 +65,7 @@ public class BookController {
 	}
 	
 	@GetMapping("/api")
-	public String api(@RequestParam("query") String query, Model model) {
+	public String api(@RequestParam("query") String query, Model model) throws IOException {
 	    // 네이버 API를 사용하여 책 검색을 수행하고 검색 결과를 가져오는 메소드
 
 	    // 네이버 API 호출을 위한 클라이언트 ID와 시크릿 키
@@ -105,7 +105,7 @@ public class BookController {
 	}
 	
 	// 검색 결과를 파싱하여 BookDto 객체의 리스트로 반환하는 메소드
-	public List<BookDto> parseSearchResults(String responseBody) {
+	public List<BookDto> parseSearchResults(String responseBody) throws IOException {
 	    // 파싱된 검색 결과를 담을 리스트 생성
 	    List<BookDto> searchResults = new ArrayList<>();
 
@@ -136,7 +136,7 @@ public class BookController {
 	    } catch (JsonProcessingException e) {
 	        // JSON 파싱 예외 처리
 	        e.printStackTrace();
-	    }
+		}
 
 	    // 검색 결과 리스트 반환
 	    return searchResults;
@@ -247,7 +247,7 @@ public class BookController {
 	    }
 
 	    // 상세 정보를 파싱하는 메서드
-	    private BookDto parseBookDetail(String responseBody) {
+	    private BookDto parseBookDetail(String responseBody) throws IOException {
 	        // 책의 상세 정보를 저장할 BookDto 객체 생성
 	        BookDto bookDetail = new BookDto();
 	        

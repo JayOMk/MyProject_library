@@ -2,32 +2,32 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
-<mapper namespace="user">
+<!-- <mapper namespace="user"> -->
  
-	<select id="overlapCheck" resultType="int">
-		SELECT COUNT(*) FROM USER WHERE ${valueType } = #{value }
-	</select>
+<!-- 	<select id="overlapCheck" resultType="int"> -->
+<!-- 		SELECT COUNT(*) FROM USER WHERE ${valueType } = #{value } -->
+<!-- 	</select> -->
 	
-	<insert id="register">
-		INSERT INTO USER (
-			ID,
-			EMAIL,
-			USERNAME,
-			PASSWORD,
-			PHONE,
-			ADDRESS
-		) VALUES (
-			USER_ID_SEQ.NEXTVAL,
-			#{username },
-			#{password },
-			#{email },
-			#{phone },
-			#{address }
-		)
-	</insert>
-</mapper> 
+<!-- 	<insert id="register"> -->
+<!-- 		INSERT INTO USER ( -->
+<!-- 			ID, -->
+<!-- 			EMAIL, -->
+<!-- 			USERNAME, -->
+<!-- 			PASSWORD, -->
+<!-- 			PHONE, -->
+<!-- 			ADDRESS -->
+<!-- 		) VALUES ( -->
+<!-- 			USER_ID_SEQ.NEXTVAL, -->
+<!-- 			#{username }, -->
+<!-- 			#{password }, -->
+<!-- 			#{email }, -->
+<!-- 			#{phone }, -->
+<!-- 			#{address } -->
+<!-- 		) -->
+<!-- 	</insert> -->
+<!-- </mapper>  -->
 
-<!-- <mapper namespace="com.lib.dao.UserDao"> -->
+<mapper namespace="com.lib.dao.UserDao">
     
 <!--     <select id="loginYn" parameterType="hashmap"  resultType="com.lib.dto.UserDto"> -->
 <!--         select password from member where email=#{email} -->
@@ -40,16 +40,23 @@
 <!--     <insert id="signUp" parameterType="hashmap"> -->
 <!--    	 insert into member (email, name, phone, password) values(#{email},#{name},#{phone},#{password}) -->
 <!-- 	</insert> -->
-	
-<!-- 	<select id="login" resultType="User"> -->
-<!--     SELECT *  -->
-<!--     FROM  -->
-<!--     	USER -->
-<!--     LEFT JOIN  -->
-<!--         (SELECT USER_ID, SUM(POINT) POINT FROM BM_POINT GROUP BY USER_ID) P -->
-<!--     ON  -->
-<!--         U.ID = P.USER_ID -->
-<!--     WHERE U.USERNAME = #{username }     -->
+
+  <select id="findByUserId" resultType="com.lib.dto.UserDto">
+    SELECT * FROM user WHERE email = #{email}
+  </select>
+
+  <!-- 사용자 중복 검사 -->
+  <select id="countByUserid" resultType="int">
+    SELECT COUNT(*) FROM user WHERE email = #{email}
+  </select>
+
+  <!-- 회원 저장 -->
+  <insert id="save" parameterType="com.lib.dto.UserDto">
+    INSERT INTO user (email, password, username, phone, address) VALUES (#{email}, #{password}, #{username}, #{phone}, #{address})
+  </insert>
+  
+<!--   <select id="findOne" resultType="com.lib.dto.UserDto" parameterType="java.lang.String"> -->
+<!--     SELECT * FROM user WHERE email = #{email} -->
 <!-- </select> -->
 
-<!-- </mapper> -->
+</mapper>

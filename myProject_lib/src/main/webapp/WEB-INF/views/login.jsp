@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/view/include/link.jsp" %>
+<%-- <%@ include file="/WEB-INF/view/include/link.jsp" %> --%>
  
 <link rel="stylesheet" href="/css/user/login.css">
 </head>
@@ -32,20 +32,6 @@
 		            </div>
 	            </div>
             </form>
-            
-			<div id="oauth_login">
-				<div>
-					<a href="/oauth2/authorization/kakao"></a>
-				</div>
- 
-				<div>
-					<a href="/oauth2/authorization/naver"></a>
-				</div>
-				
-				<div>
-					<a href="/oauth2/authorization/google"></a>
-				</div>
-			</div>
 			
 			<div class="join"><a href="/join" >회원 가입하러 가기</a></div>
         </div>

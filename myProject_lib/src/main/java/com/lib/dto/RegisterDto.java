@@ -1,7 +1,7 @@
 package com.lib.dto;
 
-import javax.validation.constraints.Pattern;
 
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data

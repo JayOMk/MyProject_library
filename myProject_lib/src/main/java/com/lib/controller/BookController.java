@@ -19,11 +19,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,7 +39,9 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lib.dto.BookDto;
+import com.lib.dto.RentalDto;
 import com.lib.service.BookService;
+import com.lib.service.RentalService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,10 +52,8 @@ public class BookController {
 	@Autowired
 	private BookService bookService;
 	
-//	@GetMapping("/main_test2")
-//	public String test() {
-//		return "main_test2";
-//	}
+	@Autowired
+	private RentalService rentalService;
 	
 	@GetMapping("/main")
 	public String test() {
@@ -310,27 +312,19 @@ public class BookController {
 	    return "searchForm"; // 검색 결과를 보여주는 페이지로 이동
 	}
 	
-
-    @GetMapping("/add")
-    public String showAddBookForm() {
-        return "addBook"; // addBook.jsp로 이동
-    }
-
-    @PostMapping("/add")
-    public String addBook(BookDto book) {
-        bookService.addBook(book);
-        return "redirect:/books/add"; // 추가 후 다시 입력 폼으로 리다이렉트
-    }
-
-    @GetMapping("/delete")
-    public String showDeleteBookForm() {
-        return "deleteBook"; // deleteBook.jsp로 이동
-    }
-
-    @PostMapping("/delete")
-    public String deleteBook(int seqNo) {
-        bookService.deleteBook(seqNo);
-        return "redirect:/books/delete"; // 삭제 후 다시 삭제 폼으로 리다이렉트
-    }
+	@PostMapping("/rental")
+	public String rentBook(@ModelAttribute("rentalDto") RentalDto rentalDto, Model model) {
+	    try {
+	        // 대출 정보를 받아와 데이터베이스에 저장하는 로직 구현
+	        rentalService.addRental(rentalDto); // rentalService 인스턴스를 사용하여 메서드 호출
+	        model.addAttribute("message", "책 대출이 완료되었습니다.");
+	    } catch (Exception e) {
+	        // 대출 정보 저장 중 예외 발생 시 처리
+	        e.printStackTrace();
+	        model.addAttribute("errorMessage", "책 대출에 실패했습니다. 다시 시도해주세요.");
+	    }
+	    // 적절한 뷰 페이지로 리다이렉트
+	    return "redirect:/main";
+	}
 }
 

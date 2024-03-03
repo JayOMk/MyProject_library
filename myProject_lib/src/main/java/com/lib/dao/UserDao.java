@@ -15,22 +15,18 @@ import com.lib.dto.*;
 
 @Mapper
 public interface UserDao {
-//    public ArrayList<UserDto> loginYn(HashMap<String, String> param);
-//    public void write(HashMap<String, String> param);
-//    public void signUp(UserDto userDto);
-//	void register(RegisterDto registerDto);
-//	int overlapCheck(String value, String valueType);
 	
-//    @Select("SELECT * FROM user WHERE email = #{email}")
     UserDto findByUserId(@Param("email") String email);
     
-//    @Select("SELECT COUNT(*) FROM user WHERE email = #{email}")
     int countByUserid(@Param("email") String email);
 
-//    @Insert("INSERT INTO user (email, password, username, phone, address) VALUES (#{email}, #{password}, #{username}, #{phone}, #{address})")
-//    void save(@Param("email") String email, @Param("password") String password);
     void save(UserDto userDto);
     
-    Optional<UserDto> findOne(String email);
+    // 사용자 이름, 연락처, 주소를 가져오는 메서드 추가
+    String findNameByEmail(@Param("email") String email);
+    
+    String findPhoneNumberByEmail(@Param("email") String email);
+    
+    String findAddressByEmail(@Param("email") String email);
 
 }

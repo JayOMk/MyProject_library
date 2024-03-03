@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -147,19 +148,20 @@
             <div class="sidebar">
                 <!-- 로그인 입력 칸 -->
                 <div class="sidebar-item">
-                    <h4>로그인</h4>
-                    <form id="loginForm" action="loginYn" method="post">
-                        <div class="mb-3">
-                            <label for="username" class="form-label">사용자 이메일</label>
-                            <input type="email" class="form-control" id="email" placeholder="ex)abc@abc.com"required="required"/>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">비밀번호</label>
-                            <input type="password" class="form-control" id="password" required="required"/>
-                        </div>
-                        <button type="submit" class="btn btn-primary">로그인</button>
-                        <button type="submit" class="btn btn-primary">회원가입</button>
-                    </form>
+					<!-- 로그인한 경우 -->
+					<sec:authorize access="isAuthenticated()">
+					    <h4>환영합니다.</h4><br>
+					    <h4><sec:authentication property="principal.username" /> 님</h4><br>
+					    <form action="/logout" method="post">
+					        <button type="submit" class="btn btn-primary">로그아웃</button>
+					    </form>
+					</sec:authorize>
+					
+					<!-- 로그인하지 않은 경우 -->
+					<sec:authorize access="isAnonymous()">
+					    <p>GUEST</p>
+					    <a href="/login" class="btn btn-primary">로그인</a>
+					</sec:authorize>
                 </div>
                 <div style="border-bottom:1px solid #eaeaea;"></div>
 

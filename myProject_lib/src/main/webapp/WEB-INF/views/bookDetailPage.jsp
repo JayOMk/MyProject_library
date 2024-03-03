@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -154,24 +155,23 @@
 	        <!-- 사이드바 영역 -->
 	        <div class="col-lg-2 col-md-4 col-sm-5">
 	            <div class="sidebar">
-	                <!-- 로그인 입력 칸 -->
-	                <div class="sidebar-item">
-		                <div style="border-bottom:1px solid #eaeaea;">
-		                    <h4>로그인</h4>
-		                    <form id="loginForm" action="loginYn" method="post">
-		                        <div class="mb-3">
-		                            <label for="username" class="form-label">사용자 이메일</label>
-		                            <input type="email" class="form-control" id="email" placeholder="ex)abc@abc.com"required="required"/>
-		                        </div>
-		                        <div class="mb-3">
-		                            <label for="password" class="form-label">비밀번호</label>
-		                            <input type="password" class="form-control" id="password" required="required"/>
-		                        </div>
-		                        <button type="submit" class="btn btn-primary">로그인</button>
-		                        <button type="submit" class="btn btn-primary">회원가입</button>
-		                    </form>
-		                </div>               
-	                </div>
+                <div class="sidebar-item">
+					<!-- 로그인한 경우 -->
+					<sec:authorize access="isAuthenticated()">
+					    <h4>환영합니다.</h4><br>
+					    <h4><sec:authentication property="principal.username" /> 님</h4><br>
+					    <form action="/logout" method="post">
+					        <button type="submit" class="btn btn-primary">로그아웃</button>
+					    </form>
+					</sec:authorize>
+					
+					<!-- 로그인하지 않은 경우 -->
+					<sec:authorize access="isAnonymous()">
+					    <p>GUEST</p>
+					    <a href="/login" class="btn btn-primary">로그인</a>
+					</sec:authorize>
+                </div>
+                <div style="border-bottom:1px solid #eaeaea;"></div>
 	                <!-- 내 서재 칸 -->
 	                <div class="sidebar-item">
 						<div style="border-bottom:1px solid #eaeaea;">
@@ -231,7 +231,7 @@
 							<span>대출 가능 여부 : </span><span> 가능 </span><br>
 						</p>
 						<p>
-	                        <button type="submit" class="btn btn-primary">대출</button>
+	                        <button class="btn btn-primary" onclick="rentBook('${bookDetail.isbn}', '${bookDetail.title}')">대출하기</button>
 	                        <button type="submit" class="btn btn-primary">예약</button>
 						</p>
 						</div>
@@ -278,3 +278,41 @@
 
 </body>
 </html>
+<script>
+function rentBook(isbn, title) {
+    // 로그인한 사용자의 정보
+    var username = "${loggedInUser.username}";
+    var email = "${loggedInUser.email}";
+    var phone = "${loggedInUser.phone}";
+    var address = "${loggedInUser.address}";
+//     var isbn = "${bookDetail.isbn}";
+//     var title = "${bookDetail.title}";
+
+    // AJAX 요청을 위한 데이터
+    var requestData = {
+        isbn: isbn,
+        title: title,
+        username: username,
+        email: email,
+        phone: phone,
+        address: address
+    };
+
+    // AJAX POST 요청
+    $.ajax({book
+        type: "POST",
+        url: "/rental",
+        contentType: "application/json",
+        data: JSON.stringify(requestData),
+        success: function(response) {
+            // 요청 성공 시 처리할 내용
+            alert("책 대출이 완료되었습니다.");
+        },
+        error: function(xhr, status, error) {
+            // 요청 실패 시 처리할 내용
+            console.error("Error: " + error);
+            alert("책 대출에 실패했습니다. 다시 시도해주세요.");
+        }
+    });
+}
+</script>
